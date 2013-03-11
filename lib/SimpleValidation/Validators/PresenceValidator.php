@@ -3,8 +3,10 @@ namespace SimpleValidation\Validators;
 
 class PresenceValidator extends AbstractValidator
 {
-    protected function validate($value)
+    public function validate($value)
     {
-        return !($value === null || $value === "");
+        if ($value === null || $value === "") {
+            $this->instance->errors->add($this->property, "blank");
+        }
     }
 }

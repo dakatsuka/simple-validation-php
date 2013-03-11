@@ -13,7 +13,7 @@ trait Validatable
     /**
      * Array of error messages stored.
      */
-    public $errors = [];
+    public $errors;
 
     /**
      * Run all validations and returns boolean.
@@ -60,13 +60,16 @@ trait Validatable
             return true;
         }
 
+        $this->errors = new Errors();
+
         foreach ($this->validations as $property => $value) {
             foreach ($this->validations[$property] as $validatorName => $options) {
                 $klass = '\SimpleValidation\\Validators\\'.ucfirst($validatorName).'Validator';
                 $validator = new $klass($this, $property, $options);
-                $validator->run($this->$property);
+                $validator->validate($this->$property);
             }
         }
-        return empty($this->errors);
+
+        return ($this->errors->count() === 0);
     }
 }

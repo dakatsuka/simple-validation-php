@@ -3,7 +3,7 @@ namespace SimpleValidation\Validators;
 
 class LengthValidator extends AbstractValidator
 {
-    protected function validate($value)
+    public function validate($value)
     {
         return true;
     }
